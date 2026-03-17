@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>🚀 Neon 실시간 커뮤니티</h2>
+  <input id="name" placeholder="닉네임">
+  <input id="content" placeholder="내용을 입력하세요">
+  <button onclick="send()">글쓰기</button>
+
+  <ul id="board"></ul> <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const board = document.getElementById('board');
+
+    // 서버에서 새 글 신호를 받으면 화면에 추가
+    socket.on('render post', (post) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${post.author}:</strong> ${post.content}`;
+      board.prepend(li); // 최신글을 위로
+    });
+
+    // 처음 접속 시 기존 데이터 한꺼번에 받기
+    socket.on('load posts', (posts) => {
+      posts.forEach(post => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${post.author}:</strong> ${post.content}`;
+        board.appendChild(li);
+      });
+    });
+
+    function send() {
+      const author = document.getElementById('name').value;
+      const content = document.getElementById('content').value;
+      socket.emit('new post', { author, content }); // 서버로 전송
+    }
+  </script>
+</body>
+</html>
