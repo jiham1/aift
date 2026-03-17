@@ -1,13 +1,14 @@
 {
-  "name": "render-neon-select",
+  "name": "neon-community",
   "version": "1.0.0",
-  "description": "Render and Neon DB connection example",
-  "main": "index.js",
+  "description": "실시간 커뮤니티",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "socket.io": "^4.7.2"
   }
 }
